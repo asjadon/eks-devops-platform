@@ -10,7 +10,7 @@ const collectDefaultMetrics = client.collectDefaultMetrics;
 collectDefaultMetrics();
 
 app.get("/", (req, res) => {
-  res.send("EKS DevOps Platform is running");
+  res.send(process.env.APP_MESSAGE || "Default App Message");
 });
 
 app.get("/health", (req, res) => {

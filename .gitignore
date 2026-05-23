@@ -29,3 +29,6 @@ kubeconfig
 # Temporary files
 tmp/
 temp/
+
+# Kubernetes Secrets
+k8s/secret.yaml
