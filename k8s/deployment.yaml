@@ -9,18 +9,21 @@ spec:
 
   selector:
     matchLabels:
-      app: nodejs-app
+      app: eks-devops-app
 
   template:
     metadata:
       labels:
-        app: nodejs-app
+        app: eks-devops-app
 
     spec:
       containers:
-        - name: nodejs-container
+        - name: eks-devops-container
           image: eks-devops-app:v3
           imagePullPolicy: Never
+
+          ports:
+            - containerPort: 3000
 
           env:
             - name: APP_MESSAGE
@@ -35,5 +38,34 @@ spec:
                   name: eks-devops-secret
                   key: APP_SECRET
 
-          ports:
-            - containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+
+          volumeMounts:
+            - name: persistent-storage
+              mountPath: /app-data
+
+      volumes:
+        - name: persistent-storage
+          persistentVolumeClaim:
+            claimName: demo-pvc
