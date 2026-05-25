@@ -1,0 +1,15 @@
+replicaCount: 1
+
+image:
+  repository: eks-devops-app
+  tag: v1
+  pullPolicy: Never
+
+service:
+  type: NodePort
+  port: 80
+  targetPort: 3000
+  nodePort: 30081
+
+persistence:
+  enabled: false
