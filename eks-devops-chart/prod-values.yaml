@@ -1,9 +1,9 @@
 replicaCount: 3
 
 image:
-  repository: eks-devops-app
-  tag: v2
-  pullPolicy: Never
+  repository: jadon3107/eks-devops-app
+  tag: v3
+  pullPolicy: Always
 
 service:
   type: NodePort
